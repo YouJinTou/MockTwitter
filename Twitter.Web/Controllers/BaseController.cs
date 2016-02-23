@@ -12,6 +12,10 @@ namespace Twitter.Web.Controllers
 
         protected ITwitterData data;
 
+        public BaseController()
+        {
+        }
+
         public BaseController(ITwitterData data)
         {
             this.data = data;
