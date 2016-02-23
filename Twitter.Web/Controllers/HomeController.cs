@@ -26,9 +26,7 @@ namespace Twitter.Web.Controllers
                 return View();
             }
 
-            IQueryable<TweetViewModel> tweets = null;
-
-            tweets = this.data.Tweets
+            var tweets = this.data.Tweets
                 .All()
                 .OrderByDescending(t => t.CreatedOn)
                 .Select(t => new TweetViewModel()
