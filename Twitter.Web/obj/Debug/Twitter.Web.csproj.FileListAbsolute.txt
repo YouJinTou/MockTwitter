@@ -277,3 +277,5 @@ D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Ninject.xml
 D:\Programming\Git Repositories\Twitter\Twitter.Web\obj\Debug\Twitter.Web.csprojResolveAssemblyReference.cache
 D:\Programming\Git Repositories\Twitter\Twitter.Web\obj\Debug\Twitter.Web.dll
 D:\Programming\Git Repositories\Twitter\Twitter.Web\obj\Debug\Twitter.Web.pdb
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Ninject.Web.Mvc.dll
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Ninject.Web.Mvc.xml

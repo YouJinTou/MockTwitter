@@ -1,7 +1,7 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Twitter.Data.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Twitter.Data.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Twitter.Web.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Twitter.Web.App_Start.NinjectWebCommon), "Stop")]
 
-namespace Twitter.Data.App_Start
+namespace Twitter.Web.App_Start
 {
     using System;
     using System.Web;
@@ -10,8 +10,8 @@ namespace Twitter.Data.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using UnitOfWork;
-
+    using Data;
+    using Data.UnitOfWork;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
