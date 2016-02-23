@@ -55,7 +55,7 @@ namespace Twitter.Web.Controllers
 
             this.TempData["postTweetSuccess"] = "Tweet sent successfully";
 
-            // Broadcast the new tweet to all users
+            //  Broadcast the new tweet to all users
             //var tweetsHubContext = GlobalHost.ConnectionManager.GetHubContext<TweetsHub>();
 
             //tweetsHubContext.Clients.All.updateFeed(tweet);
