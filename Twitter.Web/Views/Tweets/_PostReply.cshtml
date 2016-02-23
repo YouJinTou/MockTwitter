@@ -4,7 +4,8 @@
                 routeValues: new { id = id }, htmlAttributes: new { @class = "form-horizontal" },
                 ajaxOptions: new AjaxOptions {
                     HttpMethod = "POST",
-                    UpdateTargetId = "replies-" + Model,
+                    UpdateTargetId = "replies-" + id,
+                    OnComplete = "checkVisibilityReplyControls(" + id + ")",
                     InsertionMode = InsertionMode.Replace
                 }))
     {

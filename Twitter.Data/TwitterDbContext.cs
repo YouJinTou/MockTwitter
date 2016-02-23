@@ -1,6 +1,7 @@
 namespace Twitter.Data
 {
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Migrations;
     using Models;
     using System.Data.Entity;
 
@@ -9,7 +10,7 @@ namespace Twitter.Data
         public TwitterDbContext()
             : base("Context", throwIfV1Schema: false)
         {
-            Database.SetInitializer( new CreateDatabaseIfNotExists<TwitterDbContext>());
+            Database.SetInitializer( new MigrateDatabaseToLatestVersion<TwitterDbContext, Configuration>());
         }
 
         public virtual IDbSet<Tweet> Tweets { get; set; }

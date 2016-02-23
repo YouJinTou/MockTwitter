@@ -1,4 +1,4 @@
-﻿// -------------- Many tweets + reply box ------------------------------
+﻿// -------------- Many tweets + reply box show/hide ------------------------------
 function checkVisibilityReplyControls(id) {
     var repliesControls = $('#tweet-replies-controls-' + id);
     var replyBox = $('#tweet-reply-box-only-' + id);
@@ -26,7 +26,7 @@ function loadReplyBoxForCommentsTree(id) {
     })
 }
 
-// -------------- Single reply box --------------------------------
+// -------------- Single reply box show/hide --------------------------------
 function checkVisibilityReplyBox(id) {
     var repliesControls = $('#tweet-replies-controls-' + id);
     var replyBox = $('#tweet-reply-box-only-' + id);
@@ -53,7 +53,7 @@ function loadReplyBoxOnly(id) {
 }
 
 
-// -------------------------------------------
+// -------------Post tweet------------------------------
 function postTweet(data) {
     $('.tweets-container').prepend(data.responseText);
 }

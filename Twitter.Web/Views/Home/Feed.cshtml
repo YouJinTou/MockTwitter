@@ -1,6 +1,10 @@
 ﻿@model PagedList.IPagedList<Twitter.Web.Models.ViewModels.TweetViewModel>
 @using PagedList.Mvc;
 
+@{ 
+    ViewBag.Title = "Feed";
+}
+
 <section class="tweets-container">
     @{
         if (Model.Count == 0)

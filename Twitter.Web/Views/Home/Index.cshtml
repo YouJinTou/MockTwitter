@@ -1,6 +1,8 @@
 ﻿@{
     if (this.Request.IsAuthenticated)
     {
+        ViewBag.Title = "MockTwitter";
+
         <section class="tweets-container">
         @{
             if (!this.User.Identity.IsAuthenticated)
