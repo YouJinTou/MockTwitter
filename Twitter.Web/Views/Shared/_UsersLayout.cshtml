@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+</head>
+
+<body id="bootstrap-overrides">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">                    
+                    @{
+                        if (this.Request.IsAuthenticated)
+                        {
+                            <li>
+                                @Html.ActionLink(
+                                    linkText: " ",
+                                    actionName: "Index",
+                                    controllerName: "Home",
+                                    routeValues: null,
+                                    htmlAttributes: new { @class = "glyphicon glyphicon-home" })
+                            </li>
+
+                            var username = this.User.Identity.Name;
+
+                            <li>
+                                @Html.ActionLink(
+                               linkText: " ",
+                               actionName: "Feed",
+                               controllerName: "Home",
+                               routeValues: null,
+                               htmlAttributes: new { @class = "glyphicon glyphicon-random" }
+                               )
+                            </li>
+                            <li>
+                                @Html.ActionLink(
+                               linkText: " ",
+                               actionName: "Profile",
+                               controllerName: "Users",
+                               routeValues: new { username = username },
+                               htmlAttributes: new { @class = "glyphicon glyphicon-user" }
+                               )
+                            </li>
+                            <li>
+                                @Html.ActionLink(
+                               linkText: " ",
+                               actionName: "All",
+                               controllerName: "Notifications",
+                               routeValues: null,
+                               htmlAttributes: new { @class = "glyphicon glyphicon-flag" }
+                               )
+                            </li>
+                        }
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container body-content">
+        @{ Html.RenderPartial("~/Views/_RedirectMessages.cshtml"); }
+                
+        @RenderBody()
+        <hr />
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/tweets/custom.js"></script>
+</body>
+</html>

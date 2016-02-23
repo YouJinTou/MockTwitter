@@ -1,0 +1,21 @@
+﻿<div id="create-tweet-box-@Model">
+    @{ var id = Model; }
+    @using (Ajax.BeginForm(actionName: "Reply", controllerName: "Tweets",
+                routeValues: new { id = id }, htmlAttributes: new { @class = "form-horizontal" },
+                ajaxOptions: new AjaxOptions {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "replies-" + Model,
+                    InsertionMode = InsertionMode.Replace
+                }))
+    {
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <textarea class="form-control" 
+                  onkeyup="trackTweetCharCountReply(this, @id);"
+                  onkeydown="trackTweetCharCountReply(this, @id);"
+                  rows="1" name="content" placeholder="Tweet your reply here"></textarea>
+        @Html.AntiForgeryToken()
+        <input type="submit" class="btn btn-info" value="Send Reply" />
+        <span class="char-tracker" id="char-tracker-@id">140</span>
+    }    
+
+</div>

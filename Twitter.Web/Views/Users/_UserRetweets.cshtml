@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Twitter.Web.Models.ViewModels.TweetViewModel>
+
+@if (!this.Request.IsAjaxRequest())
+{
+    Layout = "~/Views/Shared/_UsersLayout.cshtml";
+    <div style="margin-top: 10px">
+        @{ var username = Model.FirstOrDefault().User.UserName;}
+        <h2>@username's Tweets</h2>
+    </div>
+}
+
+<div class="tweets-container">
+    @{
+        if (Model.Count() != 0)
+        {
+            foreach (var tweet in Model)
+            {
+                @Html.Partial("~/Views/Shared/DisplayTemplates/TweetViewModel.cshtml", tweet);
+            }
+        }
+        else
+        {
+            <h3>No tweets here.</h3>
+        }
+    }
+</div>

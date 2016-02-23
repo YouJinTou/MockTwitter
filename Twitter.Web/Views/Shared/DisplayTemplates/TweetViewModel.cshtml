@@ -1,0 +1,200 @@
+﻿@model Twitter.Web.Models.ViewModels.TweetViewModel
+
+<div class="tweet" id="tweet-box-@Model.Id">
+    <div class="tweet-wrapper">
+        @{
+            var username = @Model.User.UserName;
+        }
+        <div class="tweet-avatar">
+            <img src="@Url.Content(Model.User.PictureUrl)" alt="Avatar" />
+        </div>
+        <div class="tweet-toltip" id="tweet-tooltip-@Model.Id" hidden="hidden">
+            <div class="tweet-tooltip-avatar">
+                <img src="@Url.Content(Model.User.PictureUrl)" alt="Avatar" />
+            </div>
+
+            <span class="tweet-tooltip-username">
+                @Html.ActionLink(
+                        linkText: "@" + username,
+                        actionName: "Profile",
+                        controllerName: "Users",
+                        routeValues: new { username = username },
+                        htmlAttributes: null)
+            </span>
+
+            <div class="sidebar-profile-stats">
+                <div class="sidebar-stat-title">
+                    <div class="sidebar-profile-stat">
+                        @Html.ActionLink(
+                                    linkText: "Tweets",
+                                    actionName: "Tweets",
+                                    controllerName: "Users",
+                                    routeValues: new { username = username },
+                                    htmlAttributes: null)
+                    </div>
+                </div>
+
+
+                <div class="sidebar-stat-title">
+                    <div class="sidebar-profile-stat">
+                        @Html.ActionLink(
+                                    linkText: "Following",
+                                    actionName: "Following",
+                                    controllerName: "Users",
+                                    routeValues: new { username = username },
+                                    htmlAttributes: null)
+                    </div>
+                </div>
+
+
+                <div class="sidebar-stat-title">
+                    <div class="sidebar-profile-stat">
+                        @Html.ActionLink(
+                                    linkText: "Followers",
+                                    actionName: "Followers",
+                                    controllerName: "Users",
+                                    routeValues: new { username = username },
+                                    htmlAttributes: null)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="tweet-body-wrapper">
+            <header class="tweet-header">
+
+                <span class="tweet-username">
+                    @Html.ActionLink(
+                        linkText: "@" + username,
+                        actionName: "Profile",
+                        controllerName: "Users",
+                        routeValues: new { username = username },
+                        htmlAttributes: null)
+                </span>
+
+                <span class="tweet-time-ago">
+                    @{
+                        var timeAgo = (DateTime.Now - Model.CreatedOn);
+                    }
+                    @if (timeAgo.TotalMinutes < 1)
+                    {
+                        @: @Math.Floor(timeAgo.TotalSeconds) s
+                    }
+                    else if (timeAgo.TotalHours < 1)
+                    {
+                        @: @Math.Floor(timeAgo.TotalMinutes) m
+                    }
+                    else if (timeAgo.TotalHours < 24)
+                    {
+                        @: @Math.Floor((double)timeAgo.Hours) h
+                    }
+                    else if (timeAgo.Days < 3)
+                    {
+                        @: @Math.Floor(timeAgo.TotalDays) d
+                    }
+                    else
+                    {
+                        @: @Model.CreatedOn.ToShortDateString()
+                    }
+                </span>
+
+            </header>
+
+            <div class="tweet-body">
+                <p class="tweet-body-text">
+                    @Ajax.ActionLink(Model.Content, "Replies", "Tweets", new { id = Model.Id },
+                    new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "replies-" + Model.Id,
+                        OnSuccess = "checkVisibilityReplyControls(" + Model.Id + ")",
+                    }, htmlAttributes: new { @class = "tweet-body-text-link" })
+                </p>
+            </div>
+
+            <div class="tweet-footer">
+                @if (this.Request.IsAuthenticated)
+                {
+                    <span class="tweet-reply-icon" id="tweet-reply-icon-@Model.Id">
+                        @Ajax.ActionLink(" ", "PostReply", "Tweets", new { id = Model.Id },
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            UpdateTargetId = "tweet-reply-box-only-" + Model.Id,
+                            OnSuccess = "checkVisibilityReplyBox(" + Model.Id + ")",
+                        }, htmlAttributes: new
+                        {
+                            @class = "glyphicon glyphicon-comment",
+                            @id = "tweet-reply-icon-link-" + Model.Id
+                        })
+                    </span>
+                    if (Model.FavoritedBy != null)
+                    {
+                        var favoritedByUser =
+                        Model.FavoritedBy.Where(u => u.UserName == this.User.Identity.Name).FirstOrDefault();
+
+                        if (favoritedByUser == null)
+                        {
+                            <span class="tweet-favorite-icon" id="tweet-favorite-icon-@Model.Id">
+                                @Ajax.ActionLink(" ", "Favorite", "Tweets", new { id = Model.Id },
+                                ajaxOptions: new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnComplete = "reloadPage"
+                                },
+                                htmlAttributes: new
+                                {
+                                    @class = "glyphicon glyphicon-heart",
+                                    @id = "tweet-favorite-icon-link-" + Model.Id
+                                })
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="tweet-unfavorite-icon" id="tweet-unfavorite-icon-@Model.Id">
+                                @Ajax.ActionLink(" ", "Unfavorite", "Tweets", new { id = Model.Id },
+                                ajaxOptions: new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnComplete = "reloadPage"
+                                },
+                                htmlAttributes: new
+                                {
+                                    @class = "glyphicon glyphicon-remove-circle",
+                                    @id = "tweet-unfavorite-icon-link-" + Model.Id
+                                })
+                            </span>
+                        }
+                    }
+
+                    <span class="tweet-retweet-icon" id="tweet-retweet-icon-@Model.Id">
+                        @Ajax.ActionLink(" ", "Retweet", "Tweets", new { id = Model.Id },
+                                ajaxOptions: new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnComplete = "reloadPage"
+                                },
+                                htmlAttributes: new
+                                {
+                                    @class = "glyphicon glyphicon-share-alt",
+                                    @id = "tweet-retweet-icon-link-" + Model.Id
+                                })
+                    </span>
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="tweet-reply-box-only" id="tweet-reply-box-only-@Model.Id" hidden="hidden">
+    <div class="tweet-add-reply-box-only" id="add-reply-only-@Model.Id"></div>
+</div>
+
+<div class="tweet-replies-controls" id="tweet-replies-controls-@Model.Id" hidden="hidden">
+    <div class="tweet-add-reply-box" id="add-reply-@Model.Id"></div>
+    <div class="tweet-replies-tree" id="replies-@Model.Id"></div>
+</div>

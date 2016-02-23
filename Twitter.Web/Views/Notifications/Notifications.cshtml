@@ -1,0 +1,44 @@
+﻿@model PagedList.IPagedList<Twitter.Web.Models.ViewModels.ListNotificationsViewModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Notifications";
+}
+
+@{ 
+    Layout = "~/Views/Shared/_UsersLayout.cshtml";
+}
+
+<h2>Notifications</h2>
+
+<table class="table">
+    <tr>
+        <th>User</th>
+        <th>Activity</th>
+        <th>Date</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <div class="user-avatar">
+                <img src="@Url.Content(item.CauseUser.PictureUrl)" alt="Avatar" />
+            </div>
+        </td>
+        <td>
+            @Html.ActionLink(
+                               linkText: @Html.DisplayFor(modelItem => item.Content).ToString(),
+                               actionName: "Notification",
+                               controllerName: "Notifications",
+                               routeValues: new { id = item.Id },
+                               htmlAttributes: null
+                               )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>        
+    </tr>
+}
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("All", new { page }));

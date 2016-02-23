@@ -1,0 +1,116 @@
+﻿@model Twitter.Web.Models.ViewModels.UserProfileViewModel
+
+<div class="row">
+    <div class="col-xs-9">
+        <div class="btn-group-xs" role="group">
+            @{
+                var username = Model.UserName;
+            }
+
+            @Ajax.ActionLink("Tweets", "Tweets", new { username = username },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "profile-fillable-area",
+                OnComplete = "createTooltips"
+            }, htmlAttributes: new { @class = "btn btn-link btn-xs" }) |
+            @Ajax.ActionLink("Retweets", "Retweets", new { username = username },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "profile-fillable-area",
+                OnComplete = "createTooltips"
+            }, htmlAttributes: new { @class = "btn btn-link btn-xs" }) |
+            @Ajax.ActionLink("Following", "Following", new { username = username },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "profile-fillable-area",
+                OnComplete = "createTooltips"
+            }, htmlAttributes: new { @class = "btn btn-link btn-xs" }) |
+            @Ajax.ActionLink("Followers", "Followers", new { username = username },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "profile-fillable-area",
+                OnComplete = "createTooltips"
+            }, htmlAttributes: new { @class = "btn btn-link btn-xs" }) |
+            @Ajax.ActionLink("Favorites", "Favorites", new { username = username },
+            new AjaxOptions
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "profile-fillable-area",
+                OnComplete = "createTooltips"
+            }, htmlAttributes: new { @class = "btn btn-link btn-xs" })
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div>
+            <img class="user-avatar" src="@Url.Content(Model.PictureUrl)" alt="Avatar" />
+        </div>
+
+        @if (this.User.Identity.Name != Model.UserName)
+        {
+            if (Model.Followers.FirstOrDefault(u => u.UserName == this.User.Identity.Name) == null)
+            {
+                <div class="controls">
+                    @Html.ActionLink(linkText: "Follow", actionName: "Follow", controllerName: "Users",
+                routeValues: new { username = username }, htmlAttributes: null)
+                </div>
+            }
+            else
+            {
+                <div class="controls">
+                    @Html.ActionLink(linkText: "Unfollow", actionName: "Unfollow", controllerName: "Users",
+                routeValues: new { username = username }, htmlAttributes: null)
+                </div>
+            }
+        }
+
+        <div>
+            <h2>@Model.UserName</h2>
+
+            @if (this.User.Identity.Name == Model.UserName)
+            {
+                <h4>
+                    @Html.ActionLink(
+                    linkText: "Edit Profile",
+                    actionName: "Index",
+                    controllerName: "Manage",
+                    routeValues: new { username = username },
+                    htmlAttributes: null)
+                </h4>
+            }
+        </div>
+    </div>
+    <div id="profile-fillable-area">
+        <div class="tweets-container">
+            @{
+                if (Model.Tweets.Count() != 0)
+                {
+                    foreach (var tweet in Model.Tweets)
+                    {
+                        var tweetViewModel = new Twitter.Web.Models.ViewModels.TweetViewModel()
+                        {
+                            Id = tweet.Id,
+                            User = new Twitter.Web.Models.ViewModels.UserTweetViewModel()
+                            {
+                                PictureUrl = tweet.User.PictureUrl,
+                                UserName = tweet.User.UserName
+                            },
+                            CreatedOn = tweet.CreatedOn,
+                            Content = tweet.Content,
+                            FavoritedBy = tweet.FavoritedBy
+                        };
+
+                        @Html.Partial("~/Views/Shared/DisplayTemplates/TweetViewModel.cshtml", tweetViewModel);
+                    }
+                }
+                else
+                {
+                    <h3>No tweets here.</h3>
+                }
+            }
+        </div>
+    </div>
+</div>

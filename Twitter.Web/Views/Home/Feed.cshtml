@@ -1,0 +1,10 @@
+﻿@model PagedList.IPagedList<Twitter.Web.Models.ViewModels.TweetViewModel>
+@using PagedList.Mvc;
+
+<section class="tweets-container">
+    @{
+        @Html.DisplayForModel()
+
+        @Html.PagedListPager(Model, page => Url.Action("Feed", new { page }));
+    }
+</section>

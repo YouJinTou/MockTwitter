@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+</head>
+
+<body id="anonymous-landing-page">
+    @{
+        if (!this.Request.IsAuthenticated)
+        {
+            <div class="anon-controls-box">
+                <h1><strong>Welcome to MockTwitter</strong></h1>
+                @RenderBody()
+            </div>
+        }
+    }
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,18 @@
+﻿<div class="create-tweet-box">
+    @using (Ajax.BeginForm(actionName: "Tweet", controllerName: "Tweets", routeValues: null,
+                ajaxOptions: new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnComplete = "postTweet",
+                    InsertionMode = InsertionMode.InsertBefore
+                }, htmlAttributes: new { @class = "form-horizontal", @id = "main-post-tweet-box" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <textarea type="text" class="form-control" 
+                  onkeyup="trackTweetCharCountMain(this);"
+                  onkeydown="trackTweetCharCountMain(this);" name="content" placeholder="Tweet your mind"></textarea>
+        <input class="btn btn-info" type="submit" value="Tweet" />
+        <span class="char-tracker" id="char-tracker-main">140</span>
+    }
+</div>

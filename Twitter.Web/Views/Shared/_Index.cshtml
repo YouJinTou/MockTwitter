@@ -1,0 +1,23 @@
+﻿@model PagedList.IPagedList<Twitter.Web.Models.ViewModels.TweetViewModel>
+@using PagedList.Mvc;
+
+@{
+    @Html.DisplayForModel();
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }));
+}
+
+@*@section scripts{
+    @Scripts.Render("~/bundles/signalr");
+    <script src="/signalr/hubs"></script>
+    <script>
+        $(document).ready(function () {
+            var tweetsHub = $.connection.tweets;
+
+            tweetsHub.client.updateFeed = function (tweet) {
+                $('#tweets-container')
+            }
+
+            $.connection.hub.start();
+        })
+    </script>
+}*@

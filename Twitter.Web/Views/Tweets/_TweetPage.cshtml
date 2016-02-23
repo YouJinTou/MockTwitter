@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Twitter.Web.Models.ViewModels.RepliesViewModel>
+
+@*For notifications page*@
+@if (!this.Request.IsAjaxRequest())
+{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="tweets-container">
+    @if (Model != null)
+    {
+        // For notifications page
+        if (!this.Request.IsAjaxRequest())
+        {
+            <h3>Original</h3>
+            @Html.Partial("~/Views/Shared/DisplayTemplates/TweetViewModel.cshtml", @Model.Last());
+
+            <h3>Replies</h3>
+        }
+
+        // If the request is not an AJAX request, avoid printing the original tweet in the replies
+        // as it is the last tweet in the collection
+        int count = Model.Count();
+        foreach (var reply in Model)
+        {
+            if ((count == 1 && !this.Request.IsAjaxRequest()))
+            {
+                continue;
+            }
+
+            count--;
+
+            @Html.Partial("~/Views/Shared/DisplayTemplates/TweetViewModel.cshtml", reply);
+        }
+    }
+</div>
