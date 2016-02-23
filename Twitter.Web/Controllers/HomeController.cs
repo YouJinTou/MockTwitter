@@ -10,6 +10,10 @@ namespace Twitter.Web.Controllers
 {
     public class HomeController : BaseController
     {
+        public HomeController()
+        {
+        }
+
         public HomeController(ITwitterData data)
             : base(data)
         {

@@ -11,6 +11,10 @@ namespace Twitter.Web.Controllers
     [Authorize]
     public class UsersController : BaseController
     {
+        public UsersController()
+        {
+        }
+
         public UsersController(ITwitterData data)
             : base(data)
         {

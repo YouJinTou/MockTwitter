@@ -14,6 +14,10 @@ namespace Twitter.Web.Controllers
 {
     public class TweetsController : BaseController
     {
+        public TweetsController()
+        {
+        }
+
         public TweetsController(ITwitterData data)
             : base(data)
         {
