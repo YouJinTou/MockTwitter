@@ -130,8 +130,6 @@
               #bootstrap-overrides .tweets-container .tweet .tweet-wrapper .tweet-body-wrapper .tweet-body .tweet-body-text a {
                 max-width: 100%;
                 height: 100%;
-                word-wrap: break-word;
-                word-break: break-all;
                 white-space: pre-wrap;
                 white-space: -moz-pre-wrap;
                 white-space: -pre-wrap;

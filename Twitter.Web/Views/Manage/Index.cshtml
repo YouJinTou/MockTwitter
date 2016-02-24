@@ -7,13 +7,13 @@
 
 @if (this.TempData["changeAvatarSuccess"] != null)
 {
-    <div class="text-success">
+    <div class="alert alert-success">
         <h5>@this.TempData["changeAvatarSuccess"]</h5>
     </div>
 }
 else if (this.TempData["changeAvatarError"] != null)
 {
-    <div class="text-success">
+    <div class="alert alert-success">
         <h5>@this.TempData["changeAvatarError"]</h5>
     </div>
 }
