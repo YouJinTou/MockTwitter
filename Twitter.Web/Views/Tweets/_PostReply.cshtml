@@ -5,7 +5,7 @@
                 ajaxOptions: new AjaxOptions {
                     HttpMethod = "POST",
                     UpdateTargetId = "replies-" + id,
-                    OnComplete = "checkVisibilityReplyControls(" + id + ")",
+                    OnComplete = "showRepliesAfterReplying(" + id + ")",
                     InsertionMode = InsertionMode.Replace
                 }))
     {

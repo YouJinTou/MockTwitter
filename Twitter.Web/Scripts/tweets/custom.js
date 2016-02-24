@@ -26,6 +26,23 @@ function loadReplyBoxForCommentsTree(id) {
     })
 }
 
+function showRepliesAfterReplying(id) {
+    var repliesControls = $('#tweet-replies-controls-' + id);
+    var replyBox = $('#tweet-reply-box-only-' + id);
+
+    // If only reply box is visible, hide it and show all replies
+    if (replyBox.is(":visible")) {
+        $(replyBox).hide("slow");
+        $(repliesControls).show("slow");
+    } else {
+        // If the reply box and the replies are visible, hide and then show them
+        $(repliesControls).hide("fast");
+        $(repliesControls).show("slow");
+    }
+
+    createTooltips();
+}
+
 // -------------- Single reply box show/hide --------------------------------
 function checkVisibilityReplyBox(id) {
     var repliesControls = $('#tweet-replies-controls-' + id);

@@ -55,7 +55,6 @@ namespace Twitter.Web.Controllers
 
         //
         // GET: /Manage/Index
-        [OutputCache(VaryByParam = "None", Duration = 3600)]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -217,7 +216,6 @@ namespace Twitter.Web.Controllers
 
         //
         // GET: /Manage/ChangePassword
-        [OutputCache(VaryByParam = "None", Duration = 3600)]
         public ActionResult ChangePassword()
         {
             return View();
@@ -284,7 +282,6 @@ namespace Twitter.Web.Controllers
 
         //
         // GET: /Manage/ChangeAvatar
-        [OutputCache(VaryByParam = "None", Duration = 3600)]
         public ActionResult ChangeAvatar()
         {
             
