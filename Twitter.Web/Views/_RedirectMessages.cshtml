@@ -1,67 +1,67 @@
 ﻿<div class="redirect-message-box">
     @if (this.TempData["postTweetError"] != null)
     {
-        <div class="text-danger">
+        <div class="alert alert-danger">
             <h5>@this.TempData["postTweetError"]</h5>
         </div>
     }
     else if (this.TempData["postTweetSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["postTweetSuccess"]</h5>
         </div>
     }
     else if (this.TempData["favoriteTweetSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["favoriteTweetSuccess"]</h5>
         </div>
     }
     else if (this.TempData["favoriteTweetError"] != null)
     {
-        <div class="text-danger">
+        <div class="alert alert-danger">
             <h5>@this.TempData["favoriteTweetError"]</h5>
         </div>
     }
     else if (this.TempData["unfavoriteTweetSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["unfavoriteTweetSuccess"]</h5>
         </div>
     }
     else if (this.TempData["unfavoriteTweetError"] != null)
     {
-        <div class="text-danger">
+        <div class="alert alert-danger">
             <h5>@this.TempData["unfavoriteTweetError"]</h5>
         </div>
     }
     else if (this.TempData["retweetTweetSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["retweetTweetSuccess"]</h5>
         </div>
     }
     else if (this.TempData["followUserSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["followUserSuccess"]</h5>
         </div>
     }
     else if (this.TempData["unfollowUserSuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["unfollowUserSuccess"]</h5>
         </div>
     }
     else if (this.TempData["postReplySuccess"] != null)
     {
-        <div class="text-success">
+        <div class="alert alert-success">
             <h5>@this.TempData["postReplySuccess"]</h5>
         </div>
     }
     else if (this.TempData["postReplyError"] != null)
     {
-        <div class="text-danger">
+        <div class="alert alert-danger">
             <h5>@this.TempData["postReplyError"]</h5>
         </div>
     }
