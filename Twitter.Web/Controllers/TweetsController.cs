@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
-//using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
-using System.Web.UI;
 using Twitter.Data.UnitOfWork;
 using Twitter.Models;
 using Twitter.Web.Hubs;
@@ -55,12 +55,7 @@ namespace Twitter.Web.Controllers
 
             this.TempData["postTweetSuccess"] = "Tweet sent successfully";
 
-            // Broadcast the new tweet to all users
-            //var tweetsHubContext = GlobalHost.ConnectionManager.GetHubContext<TweetsHub>();
-
-            //tweetsHubContext.Clients.All.updateFeed(tweet);
-
-            var hostname = HttpContext.Request.Url.Host;
+            BroadcastTweetEvent(tweet);           
 
             return Content(ReloadScript);
         }
@@ -111,6 +106,8 @@ namespace Twitter.Web.Controllers
             this.data.Notifications.SaveChanges();
 
             this.TempData["favoriteTweetSuccess"] = "Tweet favorited successfully";
+
+            // BroadcastNotificationEvent(tweetToFavorite.UserId);
 
             return Content(ReloadScript);
         }
@@ -214,6 +211,8 @@ namespace Twitter.Web.Controllers
             this.data.Notifications.SaveChanges();
 
             this.TempData["retweetTweetSuccess"] = "Tweet retweeted successfully";
+
+            BroadcastTweetEvent(retweetedTweetAsUnique);
 
             return Content(ReloadScript);
         }
@@ -324,6 +323,8 @@ namespace Twitter.Web.Controllers
 
             this.TempData["postReplySuccess"] = "Reply sent successfully";
 
+            BroadcastTweetEvent(reply);
+
             return RedirectToAction("Replies", "Tweets", new { id = model.Id });
         }
 
@@ -380,6 +381,67 @@ namespace Twitter.Web.Controllers
             }
 
             return result;
-        }        
+        }
+
+        // To convert the model into an HTML string for SignalR to pass to the client
+        private string RenderPartialViewToString(string view, object model, ControllerContext Context)
+        {
+            if (string.IsNullOrEmpty(view))
+            {
+                view = Context.RouteData.GetRequiredString("action");
+            }
+
+            ViewDataDictionary ViewData = new ViewDataDictionary();
+
+            TempDataDictionary TempData = new TempDataDictionary();
+
+            ViewData.Model = model;
+
+            using (StringWriter sw = new StringWriter())
+            {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(Context, view);
+
+                ViewContext viewContext = new ViewContext(Context, viewResult.View, ViewData, TempData, sw);
+
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+        private void BroadcastTweetEvent(Tweet tweet)
+        {
+            var userId = this.User.Identity.GetUserId();
+            var user = this.data.Users.Find(userId);
+            var tweetsHubContext = GlobalHost.ConnectionManager.GetHubContext<TweetsHub>();
+            var tweetViewModel = new TweetViewModel()
+            {
+                Id = tweet.Id,
+                Replies = tweet.Replies ?? new HashSet<Tweet>(),
+                RetweetedBy = tweet.RetweetedBy ?? new HashSet<User>(),
+                UserId = this.User.Identity.GetUserId(),
+                Content = tweet.Content,
+                CreatedOn = tweet.CreatedOn,
+                FavoritedBy = tweet.FavoritedBy ?? new HashSet<User>(),
+                User = new UserTweetViewModel()
+                {
+                    UserName = user.UserName,
+                    PictureUrl = user.PictureUrl
+                }
+            };
+
+            var viewAsHtml = "<h4>Recent</h4>";
+            viewAsHtml += RenderPartialViewToString(
+                "~/Views/Shared/DisplayTemplates/TweetViewModel.cshtml", tweetViewModel, this.ControllerContext);
+
+            tweetsHubContext.Clients.All.updateFeed(viewAsHtml);
+        }
+
+        private void BroadcastNotificationEvent(string receiverId)
+        {
+            var notificationsHubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationsHub>();
+
+            notificationsHubContext.Clients.All.updateNotifications();
+        }
     }
 }

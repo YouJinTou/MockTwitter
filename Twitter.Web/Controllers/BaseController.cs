@@ -21,6 +21,6 @@ namespace Twitter.Web.Controllers
             this.data = data;
         }
 
-        public ITwitterData Data { get; private set; }
+        public ITwitterData Data { get; private set; }        
     }
 }

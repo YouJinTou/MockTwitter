@@ -137,3 +137,29 @@ function createTooltips() {
         });
     })
 }
+
+// -------------SignalR----------------
+$(document).ready(function () {
+    var tweetsHub = $.connection.tweets;
+    //var notificationsHub = $.connection.notifications;
+
+    tweetsHub.client.updateFeed = function (tweet) {
+        var tweetBox = $('.create-tweet-box').first();
+        var tweetsContainer = $('.tweets-container').first();
+
+        if (tweetBox.length) {
+            $(tweetBox).append(tweet);
+        } else {
+            tweet += "</br>";
+            $(tweetsContainer).prepend(tweet);
+        }
+
+        createTooltips();
+    }
+
+    //notificationsHub.client.updateNotifications = function () {
+    //    $('.tweets-container').append('<span>New</span>');
+    //}
+
+    $.connection.hub.start();
+})

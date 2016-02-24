@@ -5,17 +5,10 @@
 
         <section class="tweets-container">
         @{
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                Html.RenderPartial("_Index");
-            }
-            else
-            {
-                Html.RenderPartial("~/Views/Tweets/_PostTweet.cshtml");
-                Html.RenderPartial("_Index");
-            }
+            Html.RenderPartial("~/Views/Tweets/_PostTweet.cshtml");
+            Html.RenderPartial("_Index");
         }
-        </section>
+        </section>        
     }
     else
     {

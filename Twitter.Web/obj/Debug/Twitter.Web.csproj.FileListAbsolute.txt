@@ -279,3 +279,7 @@ D:\Programming\Git Repositories\Twitter\Twitter.Web\obj\Debug\Twitter.Web.dll
 D:\Programming\Git Repositories\Twitter\Twitter.Web\obj\Debug\Twitter.Web.pdb
 D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Ninject.Web.Mvc.dll
 D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Ninject.Web.Mvc.xml
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\Programming\Git Repositories\Twitter\Twitter.Web\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
